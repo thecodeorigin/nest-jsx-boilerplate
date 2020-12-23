@@ -1,7 +1,8 @@
 import { PERMISSIONS } from '@common/constants/permission';
 import { Auth } from '@common/decorators/auth.decorator';
 import { UseCrud } from '@common/decorators/crud.decorator';
-import { Controller, Delete, Get, Param, ParseIntPipe, Patch } from '@nestjs/common';
+import { PaginateQueryOptions } from '@common/dto/paginate-query-options';
+import { Controller, Delete, Get, Param, ParseIntPipe, Patch, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CrudController, Override } from '@nestjsx/crud';
 import { CreateExampleDto } from '../dto/create.dto';
@@ -29,8 +30,10 @@ export class ExampleController implements CrudController<Example> {
   @Get('/trashed')
   @ApiOperation({ summary: 'Retrieve all soft-deleted Example'})
   @Auth(PERMISSIONS.USER.READ_TRASH_ALL)
-  getManyTrashed(): Promise<Example[]> {
-    return this.service.getManyTrashed()
+  getManyTrashed(
+    @Query() paginateOptions: PaginateQueryOptions
+  ): Promise<any> {
+    return this.service.getManyTrashed(paginateOptions)
   }
 
   @Patch('/:id/restore')

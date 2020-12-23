@@ -2,9 +2,10 @@ import { ConflictException, NotFoundException } from "@nestjs/common";
 import { CrudRequest } from "@nestjsx/crud";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { ErrorMessage } from "src/common/enums/error-message.enum";
-import { DeepPartial, FindOneOptions, IsNull, Not, UpdateResult } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOneOptions, IsNull, Not, UpdateResult } from "typeorm";
 import { BaseRepository } from "../Repository";
 import { pickBy, identity, isEmpty } from 'lodash'
+import { PaginateQueryOptions } from "@common/dto/paginate-query-options";
 
 export class BaseService<T> extends TypeOrmCrudService<T> {
   constructor(
@@ -96,7 +97,40 @@ export class BaseService<T> extends TypeOrmCrudService<T> {
     return { affectedRow: result.affected | result.raw.affectedRows | NaN }
   }
 
-  async getManyTrashed(): Promise<T[]> {
-    return this.find({ withDeleted: true, where: { deletedAt: Not(IsNull()) } });
+  async getManyTrashed(paginateOptions: PaginateQueryOptions): Promise<any> {
+    let { limit, page } = paginateOptions
+    page = page > 0 ? page : 1
+    limit = limit > 0 ? limit : 10
+    const offset = (page - 1) * limit
+
+    /* Get array of entities */
+    const data = await this.find({ 
+      withDeleted: true, 
+      where: { deletedAt: Not(IsNull()) },
+      take: limit,
+      skip: offset
+    })
+    /* Get the pagination info in shape */
+    const paginationInfo = await this.getPaginationInfo(
+      data, 
+      { withDeleted: true, where: { deletedAt: Not(IsNull()) }},
+      limit,
+      page
+    )
+    /* Returns similar to nestjsx-crud */
+    return { data, ...paginationInfo }
+  }
+
+  async getPaginationInfo(
+    data: Array<T>, 
+    findOptions: FindManyOptions<T>, 
+    limit: number, 
+    page: number
+  ): Promise<any> {
+    const count = data.length
+    const total = await this.count(findOptions)
+    const pageCount = (total >= limit) ? Math.ceil(total/limit) : 1
+    
+    return { count, total, page, pageCount }
   }
 }
