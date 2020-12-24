@@ -17,9 +17,9 @@ import { UsersService } from '../service';
     update: UpdateUserDto
   },
   routes: {
-    createOneBase: { decorators: [Auth(PERMISSIONS.USER.CREATE_ALL)] },
-    getOneBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
-    getManyBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
+    // createOneBase: { decorators: [Auth(PERMISSIONS.USER.CREATE_ALL)] },
+    // getOneBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
+    // getManyBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
     updateOneBase: { decorators: [Auth(PERMISSIONS.USER.UPDATE_ALL)] }
   },
   query: {

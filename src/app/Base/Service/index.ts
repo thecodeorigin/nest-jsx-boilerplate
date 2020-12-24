@@ -66,7 +66,7 @@ export class BaseService<T> extends TypeOrmCrudService<T> {
    * Pass the "findOptions" to find the entity
    * then update it base on the "dto" we passed
    */
-  async updateOneWithFindOptionsOrFail(findOptions: FindOneOptions, dto: any): Promise<T> {
+  async updateOneWithOptionsOrFail(findOptions: FindOneOptions, dto: any): Promise<T> {
     const entity = await this.findOne(findOptions)
     if (!entity) throw new NotFoundException(`${this.repo.entityName} not found`)
 
