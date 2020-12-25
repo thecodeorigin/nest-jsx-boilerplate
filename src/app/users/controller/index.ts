@@ -20,7 +20,7 @@ import { UsersService } from '../service';
     // createOneBase: { decorators: [Auth(PERMISSIONS.USER.CREATE_ALL)] },
     // getOneBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
     // getManyBase: { decorators: [Auth(PERMISSIONS.USER.READ_ALL)] },
-    updateOneBase: { decorators: [Auth(PERMISSIONS.USER.UPDATE_ALL)] }
+    // updateOneBase: { decorators: [Auth(PERMISSIONS.USER.UPDATE_ALL)] }
   },
   query: {
     exclude: ['password']
@@ -32,7 +32,7 @@ export class UsersController implements CrudController<User> {
 
   @Get('/trashed')
   @ApiOperation({ summary: 'Retrieve all soft-deleted Example'})
-  @Auth(PERMISSIONS.USER.READ_TRASH_ALL)
+  // @Auth(PERMISSIONS.USER.READ_TRASH_ALL)
   getManyTrashed(
     @Query() paginateOptions: PaginateQueryOptions
   ): Promise<any> {
@@ -41,7 +41,7 @@ export class UsersController implements CrudController<User> {
 
   @Patch('/:id/restore')
   @ApiOperation({ summary: 'Restore one soft-deleted Example'} )
-  @Auth(PERMISSIONS.USER.RESTORE_ALL)
+  // @Auth(PERMISSIONS.USER.RESTORE_ALL)
   restoreOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<User> {
@@ -49,7 +49,7 @@ export class UsersController implements CrudController<User> {
   }
 
   @Override('deleteOneBase')
-  @Auth(PERMISSIONS.USER.SOFT_DELETE_ALL)
+  // @Auth(PERMISSIONS.USER.SOFT_DELETE_ALL)
   softDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
@@ -58,7 +58,7 @@ export class UsersController implements CrudController<User> {
 
   @Delete('/:id/permanently')
   @ApiOperation({ summary: 'Delete one Example permanently'})
-  @Auth(PERMISSIONS.USER.DELETE_ALL)
+  // @Auth(PERMISSIONS.USER.DELETE_ALL)
   hardDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
