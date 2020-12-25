@@ -12,7 +12,7 @@ import { RolesRepository } from '../repository'
 export class RolesService extends BaseService<Role> {
   constructor(
     public repository: RolesRepository,
-    private permissionsService: PermissionsService,
+    public permissionsService: PermissionsService,
   ) { super(repository) }
 
   async createOne(req: CrudRequest, dto: any): Promise<Role> {

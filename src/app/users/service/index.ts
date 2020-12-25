@@ -1,3 +1,4 @@
+import { RolesService } from '@app/roles/service';
 import { BaseService } from '@base/Service';
 import { Injectable } from '@nestjs/common';
 import { CrudRequest } from '@nestjsx/crud';
@@ -9,7 +10,8 @@ import { UsersRepository } from '../repository'
 @Injectable()
 export class UsersService extends BaseService<User> {
   constructor(
-    public repository: UsersRepository
+    public repository: UsersRepository,
+    public rolesService: RolesService,
   ) { super(repository) }
 
   async getOneAllProps(options: FindOneOptions): Promise<User> {
@@ -24,6 +26,7 @@ export class UsersService extends BaseService<User> {
   async createOne(req: CrudRequest, dto: CreateUserDto): Promise<User> {
     const { email, phone } = dto
     await this.failIfDuplicated({ email, phone })
+    dto["roles"] = [await this.rolesService.findOne({ where: { name: 'USER' } })]
 
     return super.createOne(req, dto)
   }

@@ -20,7 +20,7 @@ export class RolesController implements CrudController<Role> {
   constructor(public service: RolesService) {}
 
   @Get('/trashed')
-  @ApiOperation({ summary: 'Retrieve all soft-deleted Example'})
+  @ApiOperation({ summary: 'Retrieve all soft-deleted Role'})
   getManyTrashed(
     @Query() paginateOptions: PaginateQueryOptions
   ): Promise<any> {
@@ -28,7 +28,7 @@ export class RolesController implements CrudController<Role> {
   }
 
   @Patch('/:id/restore')
-  @ApiOperation({ summary: 'Restore one soft-deleted Example'} )
+  @ApiOperation({ summary: 'Restore one soft-deleted Role'} )
   restoreOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<Role> {
@@ -43,7 +43,7 @@ export class RolesController implements CrudController<Role> {
   }
 
   @Delete('/:id/permanently')
-  @ApiOperation({ summary: 'Delete one Example permanently'})
+  @ApiOperation({ summary: 'Delete one Role permanently'})
   hardDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {

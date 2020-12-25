@@ -31,7 +31,7 @@ export class UsersController implements CrudController<User> {
   constructor(public service: UsersService) {}
 
   @Get('/trashed')
-  @ApiOperation({ summary: 'Retrieve all soft-deleted Example'})
+  @ApiOperation({ summary: 'Retrieve all soft-deleted User'})
   // @Auth(PERMISSIONS.USER.READ_TRASH_ALL)
   getManyTrashed(
     @Query() paginateOptions: PaginateQueryOptions
@@ -40,7 +40,7 @@ export class UsersController implements CrudController<User> {
   }
 
   @Patch('/:id/restore')
-  @ApiOperation({ summary: 'Restore one soft-deleted Example'} )
+  @ApiOperation({ summary: 'Restore one soft-deleted User'} )
   // @Auth(PERMISSIONS.USER.RESTORE_ALL)
   restoreOne(
     @Param('id', ParseIntPipe) id: number
@@ -57,7 +57,7 @@ export class UsersController implements CrudController<User> {
   }
 
   @Delete('/:id/permanently')
-  @ApiOperation({ summary: 'Delete one Example permanently'})
+  @ApiOperation({ summary: 'Delete one User permanently'})
   // @Auth(PERMISSIONS.USER.DELETE_ALL)
   hardDeleteOne(
     @Param('id', ParseIntPipe) id: number
