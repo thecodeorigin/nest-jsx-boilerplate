@@ -1,7 +1,8 @@
+import { Role } from "@app/roles/index.entity";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { genSalt, hash } from "bcrypt";
 import { BaseEntityChild } from "src/app/Base/Entity/index.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User extends BaseEntityChild {
@@ -60,6 +61,14 @@ export class User extends BaseEntityChild {
     type: 'text'
   })
   bio: string
+  
+  @ManyToMany(() => Role, role => role.users, { eager: true })
+  @JoinTable({
+    name: 'user_roles',
+    joinColumn: { name: 'userId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'roleId', referencedColumnName: 'id' }
+  })
+  roles: Role[]
   
   /**
    * Trigger
