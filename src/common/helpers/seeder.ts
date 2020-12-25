@@ -1,4 +1,5 @@
 import { Permission } from "@app/permissions/index.entity";
+import { Role } from "@app/roles/index.entity";
 import { Connection } from "typeorm";
 
 export async function getAllPermissionIdsByComponent(
@@ -33,4 +34,18 @@ export async function getPermissionIdsByPermissionWrappers(
   const queryResult = await Promise.all(queries)
   const ids = queryResult.map(p => p.id)
   return ids
+}
+
+export async function getRoleIdByName(
+  name: string,
+  connection: Connection
+): Promise<number> {
+  const role = await connection
+    .createQueryBuilder()
+    .from(Role, 'role')
+    .where('role.name = :name', { name })
+    .select('role.id')
+    .getOne()
+  
+  return role.id
 }
