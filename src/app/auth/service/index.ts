@@ -5,6 +5,7 @@ import { UsersService } from 'src/app/users/service';
 import { JwtPayload } from '../payload/jwt.payload';
 import { AuthResult } from '../dto/auth-result.dto';
 import { CreateUserDto } from '@app/users/dto/create.dto';
+import { User } from '@app/users/index.entity';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,13 @@ export class AuthService {
   async signUp(dto: CreateUserDto): Promise<AuthResult> {
     const user = await this.usersService.createOne(null, dto)
     return this.login(user)
+  }
+
+  async getMe(id: any): Promise<User> {
+    const user = await this.usersService.findOne(id)
+    /* We don't want to show roles */
+    delete user.roles
+    return user
   }
   
   async validateUser(email: string, password: string) {

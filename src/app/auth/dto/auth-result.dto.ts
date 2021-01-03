@@ -1,6 +1,6 @@
 import { User } from "@app/users/index.entity";
 
-export interface AuthResult {
+export class AuthResult {
   token: string
   user: User
 }

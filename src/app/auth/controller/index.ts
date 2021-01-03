@@ -20,7 +20,7 @@ export class AuthController {
   @Get('/me')
   @UseGuards(JwtAuthGuard)
   getProfile(@GetUser() user: any): any {
-    return user
+    return this.authService.getMe(user.id)
   }
   
   @ApiOperation({ summary: 'Login with email & password' })
