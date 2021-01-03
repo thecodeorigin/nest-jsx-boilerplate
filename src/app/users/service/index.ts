@@ -34,6 +34,15 @@ export class UsersService extends BaseService<User> {
     return user
   }
 
+  async createOneGoogle(dto: any): Promise<any> {
+    const { email } = dto
+    await this.failIfDuplicated({ email })
+    dto.roles = [await this.rolesService.findOne({ where: { name: 'GUEST'}})]
+
+    const user = await super.createOne(null, dto)
+    return UsersService.getUsersWithoutPassword(user)
+  }
+
   /**
    * @usage take password property out of user('s)
    * @param users Can be User or User[]

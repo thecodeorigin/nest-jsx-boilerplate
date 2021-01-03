@@ -7,6 +7,9 @@ import { CreateUserDto } from '../../users/dto/create.dto';
 import { AuthService } from '../service';
 import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 import { AuthResult } from '../dto/auth-result.dto';
+import { AuthGoogleDto } from '../dto/auth-google.dto';
+import { AuthGoogleGuard } from '@common/guards/google.guard';
+import { GetGoogleUser } from '@common/decorators/get-google-user.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -29,6 +32,14 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   login(@GetUser() user: any): AuthResult {
     return this.authService.login(user)
+  }
+
+  @ApiOperation({ summary: 'Login with google' })
+  @ApiBody({ type: AuthGoogleDto })
+  @Post('/login/google')
+  @UseGuards(new AuthGoogleGuard())
+  async loginGoogle(@GetGoogleUser() user: any): Promise<AuthResult> {
+    return this.authService.loginGoogle(user)
   }
 
   @ApiOperation({ summary: 'Sign up User' })

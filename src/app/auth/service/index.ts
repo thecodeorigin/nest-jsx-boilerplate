@@ -22,8 +22,19 @@ export class AuthService {
     return auth
   }
 
+  async loginGoogle(userGoogle: any): Promise<AuthResult> {
+    const currentUser = await this.usersService.findOne({ where: { email: userGoogle.email }})
+    if (!currentUser) return this.signUpGoogle(userGoogle)
+    return this.login(currentUser)
+  }
+
   async signUp(dto: CreateUserDto): Promise<AuthResult> {
     const user = await this.usersService.createOne(null, dto)
+    return this.login(user)
+  }
+
+  async signUpGoogle(dto: any): Promise<AuthResult> {
+    const user = await this.usersService.createOneGoogle(dto)
     return this.login(user)
   }
 
