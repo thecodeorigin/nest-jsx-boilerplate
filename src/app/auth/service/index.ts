@@ -45,8 +45,8 @@ export class AuthService {
 
   async getMe(id: any): Promise<User> {
     const user = await this.usersService.findOne(id)
-    /* We don't want to show roles */
-    delete user.roles
+    user['permissions'] = RolesService.flattenRolesIntoPermissions(user['roles'])
+    
     return user
   }
   
