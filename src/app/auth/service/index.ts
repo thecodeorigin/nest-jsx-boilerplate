@@ -6,6 +6,7 @@ import { JwtPayload } from '../payload/jwt.payload';
 import { AuthResult } from '../dto/auth-result.dto';
 import { CreateUserDto } from '@app/users/dto/create.dto';
 import { User } from '@app/users/index.entity';
+import { RolesService } from '@app/roles/service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,11 @@ export class AuthService {
   login(user: any): AuthResult {
     const { id, email } = user
     const payload: JwtPayload = { id, email }
-    const token = this.jwtService.sign(payload)
+    const token: string = this.jwtService.sign(payload)
+
+    /* Flatten roles into permissions */
+    user['permissions'] = RolesService.flattenRolesIntoPermissions(user['roles'])
+
     const auth: AuthResult = { token, user }
     return auth
   }

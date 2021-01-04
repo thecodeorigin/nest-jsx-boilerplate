@@ -1,8 +1,9 @@
+import { Permission } from '@app/permissions/index.entity';
 import { PermissionsService } from '@app/permissions/service';
 import { BaseService } from '@base/Service';
 import { Injectable } from '@nestjs/common';
 import { CrudRequest } from '@nestjsx/crud';
-import { omit } from 'lodash';
+import { isEqual, omit } from 'lodash';
 import { CreateRoleDto } from '../dto/create.dto';
 import { UpdateRoleDto } from '../dto/update.dto';
 import { Role } from '../index.entity';
@@ -41,5 +42,27 @@ export class RolesService extends BaseService<Role> {
     }
 
     return role.save()
+  }
+
+  /**
+   * @usage Returns permissions array by flatten roles then reduce 
+   *        duplicated permissions prop in every role from roles array
+   * 
+   * @param roles User's roles array
+   */
+  static flattenRolesIntoPermissions(roles: Array<Role>): Array<Permission> {
+    const permissions: Permission[] = []
+
+    roles.forEach(role => {
+      role.permissions.forEach(per => {
+        /* If 'permissions' array does not contains 'per', push it in */
+        if (!permissions.some(p => isEqual(p, per)))
+          permissions.push(per)
+      })
+      /* Reduce permissions property out of 'role' object */
+      delete role.permissions
+    })
+
+    return permissions
   }
 }

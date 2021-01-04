@@ -23,6 +23,14 @@ export class UsersService extends BaseService<User> {
     return UsersService.getUsersWithoutPassword(user)
   }
 
+  async getOne(req: CrudRequest): Promise<User> {
+    const user = await this.repository.findOne({
+      where: { id: req.parsed.paramsFilter[0].value }
+    })
+    user['permissions'] = RolesService.flattenRolesIntoPermissions(user.roles)
+    return user
+  }
+
   async createOne(req: CrudRequest, dto: CreateUserDto): Promise<User> {
     const { email, phone } = dto
     await this.failIfDuplicated({ email, phone })
