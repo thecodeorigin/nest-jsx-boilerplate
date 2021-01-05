@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
@@ -10,12 +10,15 @@ import { AuthResult } from '../dto/auth-result.dto';
 import { AuthGoogleDto } from '../dto/auth-google.dto';
 import { AuthGoogleGuard } from '@common/guards/google.guard';
 import { GetGoogleUser } from '@common/decorators/get-google-user.decorator';
+import { UpdateSelfUserDto } from '@app/users/dto/update-self.dto';
+import { UsersService } from '@app/users/service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
-    private authService: AuthService
+    public authService: AuthService,
+    public usersService: UsersService,
   ) {}
 
   @ApiBearerAuth()
@@ -24,6 +27,17 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   getProfile(@GetUser() user: any): any {
     return this.authService.getMe(user.id)
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Edit current user' })
+  @Patch('/me')
+  @UseGuards(JwtAuthGuard)
+  updateProfile(
+    @GetUser() user: any,
+    @Body() dto: UpdateSelfUserDto,
+  ): any {
+    return this.usersService.updateSelf(user, dto)
   }
   
   @ApiOperation({ summary: 'Login with email & password' })

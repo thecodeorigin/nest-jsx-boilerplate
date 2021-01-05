@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger"
-import { IsBoolean, IsOptional, IsString, MaxLength } from "class-validator"
+import { IsOptional, IsString, MaxLength } from "class-validator"
 
 export class UpdateSelfUserDto {
   @ApiPropertyOptional({ example: 'Name' })
@@ -35,9 +35,4 @@ export class UpdateSelfUserDto {
   @IsOptional()
   @IsString()
   bio: string
-
-  @ApiPropertyOptional({ example: false })
-  @IsOptional()
-  @IsBoolean()
-  isLead: boolean
 }

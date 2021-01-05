@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudRequest } from '@nestjsx/crud';
 import { FindOneOptions } from 'typeorm';
 import { CreateUserDto } from '../dto/create.dto';
+import { UpdateSelfUserDto } from '../dto/update-self.dto';
 import { User } from '../index.entity';
 import { UsersRepository } from '../repository'
 
@@ -49,6 +50,15 @@ export class UsersService extends BaseService<User> {
 
     const user = await super.createOne(null, dto)
     return UsersService.getUsersWithoutPassword(user)
+  }
+
+  async updateSelf(user: any, dto: UpdateSelfUserDto) {
+    await this.failIfDuplicated({ phone: dto?.phone })
+
+    const updated = 
+      await this.updateOneWithOptionsOrFail({ where: { id: user.id } }, dto)
+      
+    return updated
   }
 
   /**
