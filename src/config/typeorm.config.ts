@@ -4,13 +4,19 @@ import {
   TYPEORM_SYNC,
   RDS_DB_CONNECTION_STRING
 } from '@common/environments'
+import { join } from 'path';
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
+const typeOrmConfig: TypeOrmModuleOptions = {
   type: <any>RDS_DB_TYPE,
   url: RDS_DB_CONNECTION_STRING,
-  entities: ["dist/**/*.entity{.ts,.js}"],
+  entities: [join(__dirname, "../", "**/*.entity{.ts,.js}")],
+  migrations: [join(__dirname, "../", "database/migrations/**/*.ts")],
   synchronize: TYPEORM_SYNC,
-
+  dropSchema: false,
+  migrationsRun: false,
+  "cli": {
+    migrationsDir: "src/database/migrations"
+  }
   /**
    * Optional for development
    */
@@ -18,3 +24,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   //   rejectUnauthorized: false
   // }
 }
+
+export = typeOrmConfig

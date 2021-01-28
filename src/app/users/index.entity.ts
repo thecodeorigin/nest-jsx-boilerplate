@@ -37,7 +37,6 @@ export class User extends BaseEntityChild {
   @Column({
     type: 'varchar',
     length: 255,
-    nullable: true
   })
   password: string
   
@@ -58,7 +57,8 @@ export class User extends BaseEntityChild {
 
   @ApiProperty({ example: 'Very handsome man' })
   @Column({
-    type: 'text'
+    type: 'text',
+    nullable: true
   })
   bio: string
   

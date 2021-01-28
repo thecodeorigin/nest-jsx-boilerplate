@@ -6,7 +6,7 @@ export const NODE_ENV = process.env.NODE_ENV
 export const PORT = process.env.PORT || 3000
 
 export const RDS_DB_TYPE = process.env.RDS_DB_TYPE
-export const TYPEORM_SYNC = Boolean(process.env.TYPEORM_SYNC) || false
+export const TYPEORM_SYNC = process.env.TYPEORM_SYNC === 'true' ? true : false
 export const RDS_DB_CONNECTION_STRING = process.env.RDS_DB_CONNECTION_STRING
 
 export const JWT_SECRET = process.env.JWT_SECRET
