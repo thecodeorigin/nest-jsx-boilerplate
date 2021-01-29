@@ -35,6 +35,8 @@ export class AuthService {
 
   async signUp(dto: CreateUserDto): Promise<AuthResult> {
     const user = await this.usersService.createOne(null, dto)
+    /* We don't want to show password to client */
+    delete user['password']
     return this.login(user)
   }
 

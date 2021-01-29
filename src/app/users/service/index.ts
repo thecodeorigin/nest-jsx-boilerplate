@@ -38,8 +38,6 @@ export class UsersService extends BaseService<User> {
     dto["roles"] = [await this.rolesService.findOne({ where: { name: 'USER' } })]
 
     const user = await super.createOne(req, dto)
-    /* We don't want to show the roles so just delete 'roles' prop from user */
-    delete user.roles
     return user
   }
 
