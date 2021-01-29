@@ -1,43 +1,41 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
-export class CreateUserRoles1611828491429 implements MigrationInterface {
+export class CreateRolePermissions1611904984064 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.createTable(new Table({
-        name: 'user_roles',
+        name: 'role_permissions',
         columns: [
           {
-            name: 'userId',
+            name: 'roleId',
             type: 'int',
             isPrimary: true,
           },
           {
-            name: 'roleId',
+            name: 'permissionId',
             type: 'int',
             isPrimary: true,
           }
         ]
       }))
       await queryRunner.createForeignKey(
-        'user_roles',
-        new TableForeignKey({
-          columnNames: ['userId'],
-          referencedTableName: 'users',
-          referencedColumnNames: ['id'],
-        })
-      )
-      await queryRunner.createForeignKey(
-        'user_roles',
+        'role_permissions',
         new TableForeignKey({
           columnNames: ['roleId'],
           referencedTableName: 'roles',
           referencedColumnNames: ['id'],
         })
       )
-      
-      /* Cannot use Promise.all() for creating FKs, each FK must be finished before execute another */
+      await queryRunner.createForeignKey(
+        'role_permissions',
+        new TableForeignKey({
+          columnNames: ['permissionId'],
+          referencedTableName: 'permissions',
+          referencedColumnNames: ['id'],
+        })
+      )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropTable('user_roles')
+      await queryRunner.dropTable('role_permissions')
     }
 }

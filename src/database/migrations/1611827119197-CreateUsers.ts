@@ -50,6 +50,27 @@ export class CreateUsers1611827119197 implements MigrationInterface {
           type: 'text',
           isNullable: true,
         },
+        {
+          name: 'createdAt',
+          type: 'timestamp',
+          length: '6',
+          default: 'CURRENT_TIMESTAMP(6)'
+        },
+        {
+          name: 'updatedAt',
+          type: 'timestamp',
+          length: '6',
+          isNullable: true,
+          default: null,
+          onUpdate: "CURRENT_TIMESTAMP(6)"
+        },
+        {
+          name: 'deletedAt',
+          type: 'timestamp',
+          length: '6',
+          isNullable: true,
+          default: null
+        },
       ]
     }))
   }
