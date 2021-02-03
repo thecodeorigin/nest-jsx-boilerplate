@@ -14,6 +14,10 @@ const seedingConfig = {
   migrations: [join(__dirname, "../", "database/migrations/**/*.ts")],
   seeds: ['src/database/seeds/**/*{.ts,.js}'],
   factories: ['src/database/factories/**/*{.ts,.js}'],
+  /* Optional for development */
+  // ssl: {
+  //   rejectUnauthorized: false
+  // }
 }
 
 export = seedingConfig

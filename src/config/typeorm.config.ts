@@ -16,10 +16,8 @@ const typeOrmConfig: TypeOrmModuleOptions = {
   migrationsRun: false,
   "cli": {
     migrationsDir: "src/database/migrations"
-  }
-  /**
-   * Optional for development
-   */
+  },
+  /* Optional for development */
   // ssl: {
   //   rejectUnauthorized: false
   // }
