@@ -1,6 +1,6 @@
 import { Permission } from '@app/permissions/index.entity';
 import { PermissionsService } from '@app/permissions/service';
-import { BaseService } from '@base/Service';
+import { BaseService } from '@app/Template/Base/Service';
 import { Injectable } from '@nestjs/common';
 import { CrudRequest } from '@nestjsx/crud';
 import { isEqual, omit } from 'lodash';

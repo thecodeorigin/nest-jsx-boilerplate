@@ -6,8 +6,8 @@ import { AuthModule } from './auth/index.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-    UsersModule,
     AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

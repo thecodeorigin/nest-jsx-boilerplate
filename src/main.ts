@@ -1,3 +1,4 @@
+import { PORT } from '@common/environments';
 import { HttpExceptionsFilter } from '@common/filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -21,6 +22,6 @@ async function bootstrap() {
   )
   SwaggerModule.setup('docs', app, document)
 
-  await app.listen(3000);
+  await app.listen(PORT);
 }
 bootstrap();

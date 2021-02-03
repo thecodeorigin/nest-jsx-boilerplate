@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntityChild } from "src/app/Base/Entity/index.entity";
+import { BaseEntityChild } from "@app/Template/Base/Entity/index.entity";
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('{{entity}}s')

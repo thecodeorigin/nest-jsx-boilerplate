@@ -12,7 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {                                /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
-      "@base/*": ["./src/app/Base/*"],
+      "@base/*": ["src/app/Template/Base/*"],
       "@app/*": ["./src/app/*"],
       "@common/*": ["./src/common/*"],
       "@config/*": ["./config/*"],

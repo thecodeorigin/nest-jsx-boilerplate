@@ -1,5 +1,5 @@
 import { RolesService } from '@app/roles/service';
-import { BaseService } from '@base/Service';
+import { BaseService } from '@app/Template/Base/Service';
 import { Injectable } from '@nestjs/common';
 import { CrudRequest } from '@nestjsx/crud';
 import { FindOneOptions } from 'typeorm';

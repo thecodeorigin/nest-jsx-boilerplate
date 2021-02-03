@@ -1,7 +1,7 @@
 import { Role } from "@app/roles/index.entity";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { genSalt, hash } from "bcrypt";
-import { BaseEntityChild } from "src/app/Base/Entity/index.entity";
+import { BaseEntityChild } from "@app/Template/Base/Entity/index.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')

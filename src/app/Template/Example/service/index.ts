@@ -1,4 +1,4 @@
-import { BaseService } from '@base/Service';
+import { BaseService } from '@app/Template/Base/Service';
 import { Injectable } from '@nestjs/common';
 import { Example } from '../index.entity.example';
 import { ExampleRepository } from '../repository'

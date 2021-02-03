@@ -1,4 +1,4 @@
-import { TreeBaseService } from '@app/BaseTree/Service';
+import { TreeBaseService } from '@app/Template/BaseTree/Service';
 import { Injectable } from '@nestjs/common';
 import { TreeExample } from '../index.entity.example';
 import { TreeExampleRepository } from '../repository'
