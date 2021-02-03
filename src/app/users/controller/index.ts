@@ -45,7 +45,7 @@ export class UsersController implements CrudController<User> {
   restoreOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<User> {
-    return this.service.restoreOne(id)
+    return this.service.restoreOne({ id })
   }
 
   @Override('deleteOneBase')
@@ -53,7 +53,7 @@ export class UsersController implements CrudController<User> {
   softDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
-    return this.service.softDeleteOne(id)
+    return this.service.softDeleteOne({ id })
   }
 
   @Delete('/:id/permanently')
@@ -62,6 +62,6 @@ export class UsersController implements CrudController<User> {
   hardDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
-    return this.service.hardDeleteOne(id)
+    return this.service.hardDeleteOne({ id })
   }
 }

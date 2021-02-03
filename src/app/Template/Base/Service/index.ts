@@ -2,7 +2,7 @@ import { ConflictException, NotFoundException } from "@nestjs/common";
 import { CrudRequest } from "@nestjsx/crud";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { ErrorMessage } from "src/common/enums/error-message.enum";
-import { DeepPartial, FindManyOptions, FindOneOptions, IsNull, Not, UpdateResult } from "typeorm";
+import { DeepPartial, FindConditions, FindManyOptions, FindOneOptions, IsNull, Not, UpdateResult } from "typeorm";
 import { BaseRepository } from "../Repository";
 import { pickBy, identity, isEmpty } from 'lodash'
 import { PaginateQueryOptions } from "@common/dto/paginate-query-options";
@@ -78,22 +78,24 @@ export class BaseService<T> extends TypeOrmCrudService<T> {
     return this.repo.save(entity)
   }
 
-  async softDeleteOne(id: any): Promise<any> {
-    if (!(await this.repo.isDuplicated({ id }))) 
+  async softDeleteOne(condition: FindConditions<T>): Promise<any> {
+    if (!(await this.repo.isDuplicated(condition))) 
       throw new NotFoundException(ErrorMessage.USER_NOT_FOUND)
-    const result: UpdateResult = await this.repo.softDelete(id)
+    const result: UpdateResult = await this.repo.softDelete(condition)
     return { affectedRow: result.affected | result.raw.affectedRows | NaN }
   }
 
-  async hardDeleteOne(id: any): Promise<any> {
-    if (!(await this.repo.isDuplicated({ id }))) 
+  async hardDeleteOne(condition: FindConditions<T>): Promise<any> {
+    if (!(await this.repo.isDuplicated(condition))) 
       throw new NotFoundException(ErrorMessage.USER_NOT_FOUND)
-    const result = await this.repo.delete(id)
+    const result = await this.repo.delete(condition)
     return { affectedRow: result.affected | result.raw.affectedRows | NaN }
   }
 
-  async restoreOne(id: any): Promise<any> {
-    const result: UpdateResult = await this.repo.restore(id)
+  async restoreOne(condition: FindConditions<T>): Promise<any> {
+    if (!(await this.repo.isDuplicated(condition))) 
+      throw new NotFoundException(ErrorMessage.USER_NOT_FOUND)
+    const result: UpdateResult = await this.repo.restore(condition)
     return { affectedRow: result.affected | result.raw.affectedRows | NaN }
   }
 

@@ -43,7 +43,7 @@ export class RolesController implements CrudController<Role> {
   restoreOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<Role> {
-    return this.service.restoreOne(id)
+    return this.service.restoreOne({ id })
   }
 
   @Override('deleteOneBase')
@@ -51,7 +51,7 @@ export class RolesController implements CrudController<Role> {
   softDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
-    return this.service.softDeleteOne(id)
+    return this.service.softDeleteOne({ id })
   }
 
   @Delete('/:id/permanently')
@@ -60,6 +60,6 @@ export class RolesController implements CrudController<Role> {
   hardDeleteOne(
     @Param('id', ParseIntPipe) id: number
   ): Promise<any> {
-    return this.service.hardDeleteOne(id)
+    return this.service.hardDeleteOne({ id })
   }
 }
